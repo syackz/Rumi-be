@@ -1,4 +1,5 @@
 import asyncio
+import time
 import httpx
 from app.main import app
 
@@ -18,14 +19,16 @@ async def run_tests():
         })
         print(f"  [INFO] Login test status: {res.status_code}")
 
-        # 3. Register new user
+        # 3. Register new user (use dynamic email so tests can repeat on live Supabase)
+        test_email = f"user_{int(time.time())}@keluarga.id"
         reg_res = await client.post("/api/auth/register", json={
             "name": "Budi Santoso",
-            "email": "budi.santoso@keluarga.id",
+            "email": test_email,
             "password": "password12345"
         })
         assert reg_res.status_code == 201, f"Register error: {reg_res.text}"
         token = reg_res.json()["access_token"]
+        assert reg_res.json()["user"]["role"] == "Pendamping"
         print("  [OK] POST /api/auth/register : Berhasil register & token JWT didapatkan")
 
         # 4. Get Current User (/me)

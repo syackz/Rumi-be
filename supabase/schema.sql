@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS public.users (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     hashed_password TEXT NOT NULL,
-    role VARCHAR(100) DEFAULT 'Pendamping Utama',
+    role VARCHAR(100) DEFAULT 'Pendamping',
     avatar_initials VARCHAR(10) DEFAULT 'RA',
     created_at TIMESTAMPTZ DEFAULT now(),
     updated_at TIMESTAMPTZ DEFAULT now()
@@ -89,7 +89,7 @@ VALUES (
     'Andi Pratama',
     'andi.pratama@keluarga.id',
     '$2b$12$EXI5IEvOzDdsutOy7bSjeOKvTq2ulS9CAZkxQbIr814KP9u3besge',
-    'Pendamping Utama',
+    'Pendamping',
     'AP'
 )
 ON CONFLICT (email) DO NOTHING;

@@ -14,7 +14,7 @@ class UserResponse(BaseModel):
     id: str
     name: str
     email: EmailStr
-    role: str = "Pendamping Utama"
+    role: str = "Pendamping"
     avatar_initials: str = "AP"
     created_at: Optional[str] = None
 

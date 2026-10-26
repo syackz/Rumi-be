@@ -23,7 +23,7 @@ async def register(user_in: UserRegister):
         "name": user_in.name,
         "email": user_in.email,
         "hashed_password": get_password_hash(user_in.password),
-        "role": "Pendamping Utama",
+        "role": "Pendamping",
         "avatar_initials": initials
     }
 

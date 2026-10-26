@@ -44,7 +44,7 @@ class SupabaseService:
                 "email": "andi.pratama@keluarga.id",
                 # bcrypt hash untuk 'password123'
                 "hashed_password": "$2b$12$EXI5IEvOzDdsutOy7bSjeOKvTq2ulS9CAZkxQbIr814KP9u3besge",
-                "role": "Pendamping Utama",
+                "role": "Pendamping",
                 "avatar_initials": "AP",
                 "created_at": datetime.now(timezone.utc).isoformat()
             }
