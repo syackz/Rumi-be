@@ -1,0 +1,20 @@
+# Python virtual environment
+venv/
+.venv/
+env/
+
+# Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Environment variables
+.env
+
+# Large model weights (optional: user can decide whether to git commit model or use releases)
+# models_ai/*.pt
+
+# OS files
+.DS_Store
+Thumbs.db
