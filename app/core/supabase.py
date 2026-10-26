@@ -16,6 +16,12 @@ class SupabaseService:
 
     def _init_client(self):
         url = settings.SUPABASE_URL.strip()
+        if url.endswith("/rest/v1/"):
+            url = url[:-9]
+        elif url.endswith("/rest/v1"):
+            url = url[:-8]
+        url = url.rstrip("/")
+
         key = (settings.SUPABASE_SERVICE_ROLE_KEY or settings.SUPABASE_KEY).strip()
 
         if url and key and not url.startswith("https://your-project"):
