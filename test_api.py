@@ -1,3 +1,4 @@
+import os
 import asyncio
 import time
 import httpx
@@ -70,9 +71,22 @@ async def run_tests():
         # 9. Model status
         model_res = await client.get("/api/model/status")
         assert model_res.status_code == 200, f"Model status error: {model_res.text}"
+        assert model_res.json()["is_model_loaded"] is True
         print(f"  [OK] GET /api/model/status : Mode -> {model_res.json()['mode']}")
 
-        # 10. Simulate fall
+        # 10. Detect frame with YOLOv8-pose
+        snapshot_path = os.path.join(os.path.dirname(__file__), "static", "uploads", "fall-snapshot.jpg")
+        with open(snapshot_path, "rb") as f:
+            img_bytes = f.read()
+        detect_res = await client.post(
+            "/api/model/detect-frame",
+            files={"file": ("snapshot.jpg", img_bytes, "image/jpeg")}
+        )
+        assert detect_res.status_code == 200, f"Detect error: {detect_res.text}"
+        detect_data = detect_res.json()
+        print(f"  [OK] POST /api/model/detect-frame : Inferensi YOLOv8 Pose Sukses (Status: {detect_data.get('status')}, Latency: {detect_data.get('latency_ms')}ms)")
+
+        # 11. Simulate fall
         fall_res = await client.post("/api/model/simulate-fall")
         assert fall_res.status_code == 200, f"Simulate fall error: {fall_res.text}"
         print("  [OK] POST /api/model/simulate-fall : Simulasi jatuh ter-trigger & log tersimpan")

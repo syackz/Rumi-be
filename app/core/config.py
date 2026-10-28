@@ -1,6 +1,8 @@
 import os
 from typing import List, Union
+# pyrefly: ignore[missing-import]
 from pydantic_settings import BaseSettings
+# pyrefly: ignore[missing-import]
 from pydantic import field_validator
 
 class Settings(BaseSettings):

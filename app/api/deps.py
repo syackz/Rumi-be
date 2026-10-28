@@ -1,20 +1,21 @@
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from typing import Optional, Dict, Any
 from app.core.security import decode_access_token
 from app.core.supabase import db
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login", auto_error=False)
+security = HTTPBearer(auto_error=False)
 
-async def get_current_user(token: Optional[str] = Depends(oauth2_scheme)) -> Dict[str, Any]:
+async def get_current_user(credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)) -> Dict[str, Any]:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Autentikasi gagal atau token tidak valid",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    if not token:
+    if not credentials or not credentials.credentials:
         raise credentials_exception
 
+    token = credentials.credentials
     payload = decode_access_token(token)
     if payload is None:
         raise credentials_exception
